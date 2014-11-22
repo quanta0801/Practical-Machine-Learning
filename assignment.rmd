@@ -5,13 +5,13 @@ output:
     keep_md: true
 ---
 
-###Executive Summary
+##Executive Summary
 Based on machine learning techniques learnt from the course, this project required the prediction of 5 different techniques of barbell lifts, using accelerometer data on different parts of the body. The random forest technique appeared to have the highest accuracy, with a prediction rate of 99.1%! This model was this used to predict 20 different test cases.
 
-##Exploratory data analysis
+###Exploratory Data Analysis
 
 Firstly, the corresponding libraries were loaded into R. This included one which enabled parallel computing to allow faster processing.
-```{r, message=FALSE}
+```{r library-load, message=FALSE, cache=TRUE}
 library(caret)
 library(doParallel)
 cl <- makeCluster(detectCores())
@@ -19,13 +19,13 @@ registerDoParallel(cl)
 ```
 
 The data was loaded into the system:
-```{r,cache=TRUE}
+```{r read-file, cache=TRUE}
 training <- read.csv("pml-training.csv", na.strings=c("NA","#DIV/0!"))[,-1]
 testing <- read.csv("pml-testing.csv", na.strings=c("NA","#DIV/0!"))[,-1]
 ```
 
 A quick exploration showed that the data consisted of a lot of variables containing mainly NAs. These were removed to make the data more manageable for modelling.
-```{r, cache=TRUE}
+```{r subsetting,cache=TRUE}
 str(training)
 
 mostlyNA <- sapply(training, function(x) sum(is.na(x))/length(x))
@@ -35,7 +35,7 @@ test <- testing[,mostlyNA<0.97][,-(1:6)]
 
 ###Machine Learning Modelling
 The smaller data set was then put through 5 different machine learning techniques that were taught in the course. These were: random forest, gradient boosting machine, linear & quadratic discriminant analysis and naive Bayes models.
-```{r, cache=TRUE, message=FALSE}
+```{r modelling, cache=TRUE, message=FALSE}
 modelfit <- list()
 set.seed(1234); modelfit[[1]] <- train(classe~., data=train, method="rf")
 set.seed(1234); modelfit[[2]] <- train(classe~., data=train, method="gbm", verbose=F)
@@ -46,7 +46,7 @@ set.seed(1234); modelfit[[5]] <- train(classe~., data=train, method="nb")
 
 ###Results
 Based on the models trained, the accuracy of the models were as below
-```{r}
+```{r results, cache=TRUE}
 accuracy <- numeric(5)
 for (i in 1:5){
     accuracy[i] <- max(modelfit[[i]]$results$Accuracy)
@@ -57,14 +57,14 @@ results
 ```
 
 ##Final Model
-The random forest model is the best model with the highest accuracy of 'r accuracy[1]', with an error rate of `r results[1,2]
-```{r}
+The random forest model is the best model with the highest accuracy of `r accuracy[1]`, with an error rate of `r results[1,2]`
+```{r final-model, cache=TRUE}
 modelfit[[1]]$finalModel
 ```
 
 ##Prediction for Test Cases
 This model was then used to predict the 20 test cases that were provided. And the predictions are:
-```{r}
+```{r prediction, cache=TRUE}
 prediction <- predict(modelfit[[1]]$finalModel,test)
 prediction
 ```

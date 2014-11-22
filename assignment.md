@@ -1,9 +1,9 @@
 # Activity Prediction, Using Machine Learning Techniques
 
-###Executive Summary
+##Executive Summary
 Based on machine learning techniques learnt from the course, this project required the prediction of 5 different techniques of barbell lifts, using accelerometer data on different parts of the body. The random forest technique appeared to have the highest accuracy, with a prediction rate of 99.1%! This model was this used to predict 20 different test cases.
 
-##Exploratory data analysis
+###Exploratory Data Analysis
 
 Firstly, the corresponding libraries were loaded into R. This included one which enabled parallel computing to allow faster processing.
 
@@ -163,16 +163,16 @@ results
 ```
 
 ```
-##      accuracy       error
-## RF  0.9926616 0.007338431
-## GBM 0.9598913 0.040108680
-## LDA 0.7004444 0.299555559
-## QDA 0.8943049 0.105695127
-## NB  0.7472176 0.252782363
+##      accuracy      error
+## RF  0.9927947 0.00720526
+## GBM 0.9597346 0.04026537
+## LDA 0.7004444 0.29955556
+## QDA 0.8943049 0.10569513
+## NB  0.7472176 0.25278236
 ```
 
 ##Final Model
-The random forest model is the best model with the highest accuracy of 'r accuracy[1]', with an error rate of `r results[1,2]
+The random forest model is the best model with the highest accuracy of 0.9927947, with an error rate of 0.0072053
 
 ```r
 modelfit[[1]]$finalModel

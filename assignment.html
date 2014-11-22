@@ -55,12 +55,11 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 </div>
 
 
-<div id="executive-summary" class="section level3">
-<h3>Executive Summary</h3>
+<div id="executive-summary" class="section level2">
+<h2>Executive Summary</h2>
 <p>Based on machine learning techniques learnt from the course, this project required the prediction of 5 different techniques of barbell lifts, using accelerometer data on different parts of the body. The random forest technique appeared to have the highest accuracy, with a prediction rate of 99.1%! This model was this used to predict 20 different test cases.</p>
-</div>
-<div id="exploratory-data-analysis" class="section level2">
-<h2>Exploratory data analysis</h2>
+<div id="exploratory-data-analysis" class="section level3">
+<h3>Exploratory Data Analysis</h3>
 <p>Firstly, the corresponding libraries were loaded into R. This included one which enabled parallel computing to allow faster processing.</p>
 <pre class="r"><code>library(caret)
 library(doParallel)
@@ -175,6 +174,7 @@ testing &lt;- read.csv(&quot;pml-testing.csv&quot;, na.strings=c(&quot;NA&quot;,
 <pre class="r"><code>mostlyNA &lt;- sapply(training, function(x) sum(is.na(x))/length(x))
 train &lt;- training[,mostlyNA&lt;0.97][,-(1:6)]
 test &lt;- testing[,mostlyNA&lt;0.97][,-(1:6)]</code></pre>
+</div>
 <div id="machine-learning-modelling" class="section level3">
 <h3>Machine Learning Modelling</h3>
 <p>The smaller data set was then put through 5 different machine learning techniques that were taught in the course. These were: random forest, gradient boosting machine, linear &amp; quadratic discriminant analysis and naive Bayes models.</p>
@@ -195,17 +195,17 @@ for (i in 1:5){
 results &lt;- data.frame(accuracy, error=1-accuracy)
 row.names(results) &lt;- c(&quot;RF&quot;,&quot;GBM&quot;,&quot;LDA&quot;,&quot;QDA&quot;,&quot;NB&quot;)
 results</code></pre>
-<pre><code>##      accuracy       error
-## RF  0.9926616 0.007338431
-## GBM 0.9598913 0.040108680
-## LDA 0.7004444 0.299555559
-## QDA 0.8943049 0.105695127
-## NB  0.7472176 0.252782363</code></pre>
+<pre><code>##      accuracy      error
+## RF  0.9927947 0.00720526
+## GBM 0.9597346 0.04026537
+## LDA 0.7004444 0.29955556
+## QDA 0.8943049 0.10569513
+## NB  0.7472176 0.25278236</code></pre>
 </div>
 </div>
 <div id="final-model" class="section level2">
 <h2>Final Model</h2>
-<p>The random forest model is the best model with the highest accuracy of ‘r accuracy[1]’, with an error rate of `r results[1,2]</p>
+<p>The random forest model is the best model with the highest accuracy of 0.9927947, with an error rate of 0.0072053</p>
 <pre class="r"><code>modelfit[[1]]$finalModel</code></pre>
 <pre><code>## 
 ## Call:
